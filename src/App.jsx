@@ -1,29 +1,27 @@
-import React, { useContext, useState } from 'react'
-import { CountContext } from './context'
+import React, { useContext } from 'react'
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
+import { countAtom } from '../store/atoms/count'
 
 function App() {
-  const [count, setCount] = useState(0)
   
   return (
     <div>
-      <CountContext.Provider value={{ count, setCount }}>
+      <RecoilRoot>
         <Count></Count>
-      </CountContext.Provider>
+      </RecoilRoot>
     </div>
   )
 }
 
 function CountRenderer() {
-  const count = useContext(CountContext).count
+  const count = useRecoilValue(countAtom)
   return <div>
     {count}
   </div>
 }
 
 function Count() {
-  console.log("Count rendered wtf context api is bad");
-  // context api only fixes prop drilling and does not for making rendering efficient
-  // so now we'll check out state management libraries like redux and recoil
+  console.log("Count will only render once as recoil makes state management efficient")
   return (
     <div>
       <CountRenderer></CountRenderer>
@@ -33,7 +31,7 @@ function Count() {
 }
 
 function ButtonRenderer() {
-  const { count, setCount } = useContext(CountContext)
+  const [count, setCount] = useRecoilState(countAtom)
   return <div>
     <button onClick={() => {setCount(count + 1)}}>Increment</button>
     <button onClick={() => {setCount(count - 1)}}>Decrement</button>
