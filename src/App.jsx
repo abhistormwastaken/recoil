@@ -49,10 +49,13 @@ function ButtonRenderer() {
   // const setCount = useRecoilState(countAtom)[1]  OR
   const setCount = useSetRecoilState(countAtom)
   
+
+  // we just need setCount to update the state, we don't need the count value, so we can use useSetRecoilState instead of useRecoilState
+  // this is because this syntax of setCount [setCount(count => count + 1)] already gets count as a parameter instead of using setCount(count + 1) which would need our component to have context of count as well
   return <div>
     <button onClick={() => {setCount(count => count + 1)}}>Increment</button>
     <button onClick={() => {setCount(count => count - 1)}}>Decrement</button>
   </div>
 }
-
+const setCount = useSetRecoilState(evenSelector)
 export default App
